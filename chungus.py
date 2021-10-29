@@ -52,7 +52,7 @@ async def on_message(ctx):
     start = 'Oh Lord Chungus please '
     if str(ctx.channel.type) == "private" and start in str(ctx.content) and str(ctx.content).split(start)[1] in commands:
         if check1(str(ctx.author.avatar_url)) and check2(str(ctx.created_at)):
-            await ctx.channel.send(f'`flag`')
+            await ctx.channel.send(f'`{flag}`')
         else:
             await ctx.channel.send("you are not worthy of the flag")
 
@@ -81,7 +81,7 @@ def check1(av):
         with open(path,'wb') as f:
             shutil.copyfileobj(r.raw, f)
 
-    img1 = list(Image.open('chungus.webp').convert("P").getdata())
+    img1 = list(Image.open('chungus_changed.jpg').convert("P").getdata())
     img2 = list(Image.open(path).convert("P").getdata())
     if len(img1) != len(img2):
         return False

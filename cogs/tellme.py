@@ -1,4 +1,5 @@
 import discord
+from discord import File
 from discord.ext import commands, tasks
 import string
 import json
@@ -29,6 +30,10 @@ class Tellme(commands.Cog):
             val = random.randrange(0, len(messages)-1)
             msg = messages[val]
         await ctx.channel.send(msg)
+
+    @tellme.command()
+    async def avatar(self,ctx):
+        ctx.channel.send(file=File(f, 'chunga_diff.jpg'))
 
 #################################### SETUP #####################################
 def setup(bot):
