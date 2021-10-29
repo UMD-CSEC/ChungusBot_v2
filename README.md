@@ -1,2 +1,2 @@
-# ChungusBot_v2
-Just a better Chunga
+# ChungusBot
+The only bot you could ever want
