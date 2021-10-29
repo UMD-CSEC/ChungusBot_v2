@@ -10,9 +10,9 @@ import shutil
 from PIL import Image
 
 ################################ DATA STRUCTURES ###############################
-bot = commands.Bot(command_prefix = '!')
+bot = commands.Bot(command_prefix = 'Oh Lord Chungus please ')
 bot.remove_command('help')
-extensions = ['flag']
+extensions = ['tellme']
 
 #################################### EVENTS ####################################
 @bot.event # Show banner and add members to respective guilds in db
@@ -29,7 +29,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return
     if isinstance(error, commands.MissingRequiredArgument):
-        msg += "Missing a required argument.  Do >help\n"
+        msg += "Missing a required argument. Display the help menu to see what commands you can run\n"
     if isinstance(error, commands.MissingPermissions):
         msg += "You do not have the appropriate permissions to run this command.\n"
     if isinstance(error, commands.BotMissingPermissions):
@@ -45,19 +45,16 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(ctx):
+    await bot.process_commands(ctx)
     if ctx.author.bot:
         return
-    if str(ctx.channel.type) == "private":
-        print(ctx.author.avatar_url)
-        print(ctx.author.avatar)
-        print(ctx.created_at)
-        print("")
+    commands = ["help", "tellme ajoke", "tellme", "tellme theflag"]
+    start = 'Oh Lord Chungus please '
+    if str(ctx.channel.type) == "private" and start in str(ctx.content) and str(ctx.content).split(start)[1] in commands:
         if check1(str(ctx.author.avatar_url)) and check2(str(ctx.created_at)):
-            await ctx.channel.send(flag)
+            await ctx.channel.send(f'`flag`')
         else:
-            await ctx.channel.send("you are not worthy")
-    elif str(ctx.channel) == "bot-box":
-        await bot.process_commands(ctx)
+            await ctx.channel.send("you are not worthy of the flag")
 
 ################################ OTHER FUNCTIONS ###############################
 @bot.command()
@@ -66,11 +63,10 @@ async def help(ctx, page=None):
         emb = discord.Embed(description=help_info.help_page, colour=10181046)
     else:
         emb = discord.Embed(description=help_info.no_info, colour=10181046)
-    emb.set_author(name='ChungusBot Help')
+    emb.set_author(name='ChungusBot v2 Help')
     await ctx.channel.send(embed=emb)
 
 def check2(hmm):
-    print(hmm)
     something = int(hmm.split(':')[-1].split('.')[0])
     if something > 45 and something < 50:
         return True
@@ -81,7 +77,6 @@ def check1(av):
     if r.status_code == 200:
         r.raw.decode_content = True
         filename = str(str(av).split("/")[-1].split('?')[0])
-        print(av)
         path = f'./downloaded_files/{filename}'
         with open(path,'wb') as f:
             shutil.copyfileobj(r.raw, f)

@@ -1,7 +1,9 @@
 help_page = '''
-`!help`
+`Oh Lord Chungus please help`
 display this help page
-`!flag`
+`Oh Lord Chungus please tellme`
+tell you what?
+`Oh Lord Chungus please tellme theflag`
 never hurts
 '''
 
