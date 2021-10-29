@@ -9,6 +9,17 @@ import time
 import help_info
 import random
 
+def in_dms():
+    async def tocheck(ctx):
+        # A check for ctf context specific commands
+        if str(ctx.channel.type) == "private":
+            return True
+        else:
+            await ctx.send("This command is only available over DM!")
+            return False
+
+    return commands.check(tocheck)
+
 class Tellme(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -32,8 +43,10 @@ class Tellme(commands.Cog):
         await ctx.channel.send(msg)
 
     @tellme.command()
+    @in_dms()
     async def avatar(self,ctx):
-        ctx.channel.send(file=File(f, 'chunga_diff.jpg'))
+        with open(f'chunga_diff.jpg', 'rb') as f:
+            await ctx.channel.send(file=File(f, 'chunga_diff.jpg'))
 
 #################################### SETUP #####################################
 def setup(bot):

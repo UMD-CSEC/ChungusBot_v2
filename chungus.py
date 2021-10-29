@@ -45,14 +45,18 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(ctx):
+    print(ctx.author.avatar_url)
     await bot.process_commands(ctx)
     if ctx.author.bot:
         return
     commands = ["help", "tellme ajoke", "tellme", "tellme theflag"]
     start = 'Oh Lord Chungus please '
     if str(ctx.channel.type) == "private" and start in str(ctx.content) and str(ctx.content).split(start)[1] in commands:
-        if check1(str(ctx.author.avatar_url)) and check2(str(ctx.created_at)):
-            await ctx.channel.send(f'`{flag}`')
+        if check1(str(ctx.author.avatar_url)):
+            if check2(str(ctx.created_at)):
+                await ctx.channel.send(f'`{flag}`')
+            else:
+                await ctx.channel.send("close, but no cigar")
         else:
             await ctx.channel.send("you are not worthy of the flag")
 
@@ -68,7 +72,7 @@ async def help(ctx, page=None):
 
 def check2(hmm):
     something = int(hmm.split(':')[-1].split('.')[0])
-    if something > 45 and something < 50:
+    if (something > 45 and something < 50) or (something > 14 and something < 19):
         return True
     return False
 
@@ -81,8 +85,8 @@ def check1(av):
         with open(path,'wb') as f:
             shutil.copyfileobj(r.raw, f)
 
-    img1 = list(Image.open('chungus_changed.jpg').convert("P").getdata())
-    img2 = list(Image.open(path).convert("P").getdata())
+    img1 = list(Image.open('chungus_changed.jpg').convert("1").getdata())
+    img2 = list(Image.open(path).convert("1").getdata())
     if len(img1) != len(img2):
         return False
 
@@ -92,7 +96,7 @@ def check1(av):
             count += 1
 
     print(f'count = {count}\nnum_pixels = {i}\nstuff = {count / len(img1)}')
-    if count / len(img1) > 0.8:
+    if count / len(img1) > 0.92:
         return True
     return False
 
