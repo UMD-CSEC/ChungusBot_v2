@@ -52,13 +52,14 @@ async def on_message(ctx):
     commands = ["help", "tellme ajoke", "tellme", "tellme theflag"]
     start = 'Oh Lord Chungus please '
     if str(ctx.channel.type) == "private" and start in str(ctx.content) and str(ctx.content).split(start)[1] in commands:
-        if check1(str(ctx.author.avatar_url)):
+        first_check, msg = check1(str(ctx.author.avatar_url))
+        if first_check:
             if check2(str(ctx.created_at)):
                 await ctx.channel.send(f'`{flag}`')
             else:
-                await ctx.channel.send("close, but no cigar")
+                await ctx.channel.send("not the right time my friend")
         else:
-            await ctx.channel.send("you are not worthy of the flag")
+            await ctx.channel.send(msg)
 
 ################################ OTHER FUNCTIONS ###############################
 @bot.command()
@@ -88,7 +89,7 @@ def check1(av):
     img1 = list(Image.open('chungus_changed.jpg').convert("1").getdata())
     img2 = list(Image.open(path).convert("1").getdata())
     if len(img1) != len(img2):
-        return False
+        return False, "size be outta wack"
 
     count = 0
     for i in range(len(img1)):
@@ -96,9 +97,10 @@ def check1(av):
             count += 1
 
     print(f'count = {count}\nnum_pixels = {i}\nstuff = {count / len(img1)}')
+    message = "Percentage of pixels correct: " + str(count / len(img1))
     if count / len(img1) > 0.92:
-        return True
-    return False
+        return True, message
+    return False, message
 
 ##################################### MAIN #####################################
 if __name__ == '__main__': # Loads cog extentions and starts up the bot
