@@ -45,7 +45,6 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(ctx):
-    print(ctx.author.avatar_url)
     await bot.process_commands(ctx)
     if ctx.author.bot:
         return
@@ -59,7 +58,10 @@ async def on_message(ctx):
             else:
                 await ctx.channel.send("not the right time my friend")
         else:
-            await ctx.channel.send(msg)
+            if len(msg) > 0:
+                await ctx.channel.send(msg)
+            else:
+                await ctx.channel.send("no flag for you :pensive:")
 
 ################################ OTHER FUNCTIONS ###############################
 @bot.command()
@@ -96,11 +98,13 @@ def check1(av):
         if img1[i] == img2[i]:
             count += 1
 
-    print(f'count = {count}\nnum_pixels = {i}\nstuff = {count / len(img1)}')
     message = "Percentage of pixels correct: " + str(count / len(img1))
     if count / len(img1) > 0.92:
         return True, message
-    return False, message
+    elif count / len(img1) > 0.6:
+        return False, message
+    else:
+        return False, ""
 
 ##################################### MAIN #####################################
 if __name__ == '__main__': # Loads cog extentions and starts up the bot
