@@ -60,7 +60,7 @@ async def on_message(ctx):
         else:
             if len(msg) > 0:
                 await ctx.channel.send(msg)
-            else:
+            elif msg == "nope":
                 await ctx.channel.send("no flag for you :pensive:")
 
 ################################ OTHER FUNCTIONS ###############################
@@ -104,7 +104,7 @@ def check1(av):
     elif count / len(img1) > 0.6:
         return False, message
     else:
-        return False, ""
+        return False, "nope"
 
 ##################################### MAIN #####################################
 if __name__ == '__main__': # Loads cog extentions and starts up the bot

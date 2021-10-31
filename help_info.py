@@ -5,6 +5,8 @@ display this help page
 tell you what?
 `Oh Lord Chungus please tellme theflag`
 never hurts
+`Oh Lord Chungus please tellme ajoke`
+ChungusBot? More like DadBot
 '''
 
 no_info = '''
