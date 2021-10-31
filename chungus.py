@@ -91,7 +91,7 @@ def check1(av):
     img1 = list(Image.open('chungus_changed.jpg').convert("1").getdata())
     img2 = list(Image.open(path).convert("1").getdata())
     if len(img1) != len(img2):
-        return False, "size be outta wack"
+        return False, ""
 
     count = 0
     for i in range(len(img1)):
