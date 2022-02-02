@@ -3,7 +3,7 @@ import os
 import numpy as np
 from discord.ext import commands, tasks
 from itertools import cycle
-from config_vars import *
+from config_vars import flag, discord_token
 import help_info
 import requests
 import shutil
