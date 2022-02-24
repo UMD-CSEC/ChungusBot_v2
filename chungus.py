@@ -45,7 +45,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(ctx):
-    if str(ctx.channel.name) == "bot-commands":
+    if str(ctx.channel.name) == "bot-commands" or str(ctx.channel.type) == "private":
         await bot.process_commands(ctx)
     if ctx.author.bot:
         return
