@@ -45,9 +45,11 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(ctx):
-    await bot.process_commands(ctx)
+    if str(ctx.channel.name) == "bot-commands":
+        await bot.process_commands(ctx)
     if ctx.author.bot:
         return
+
     commands = ["help", "tellme ajoke", "tellme", "tellme theflag"]
     start = 'Oh Lord Chungus please '
     if str(ctx.channel.type) == "private" and start in str(ctx.content) and str(ctx.content).split(start)[1] in commands:
