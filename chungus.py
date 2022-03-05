@@ -45,7 +45,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(ctx):
-    if str(ctx.channel.name) == "bot-commands" or str(ctx.channel.type) == "private":
+    if str(ctx.channel.type) == "private" or str(ctx.channel.name) == "bot-commands":
         await bot.process_commands(ctx)
     if ctx.author.bot:
         return
@@ -53,7 +53,9 @@ async def on_message(ctx):
     commands = ["help", "tellme ajoke", "tellme", "tellme theflag"]
     start = 'Oh Lord Chungus please '
     if str(ctx.channel.type) == "private" and start in str(ctx.content) and str(ctx.content).split(start)[1] in commands:
+        print("here")
         first_check, msg = check1(str(ctx.author.avatar_url))
+        print(f'\n{first_check}\n{msg}\n')
         if first_check:
             if check2(str(ctx.created_at)):
                 await ctx.channel.send(f'`{flag}`')
@@ -89,16 +91,25 @@ def check1(av):
         path = f'./downloaded_files/{filename}'
         with open(path,'wb') as f:
             shutil.copyfileobj(r.raw, f)
+    else:
+        return False, "Could not grab your pfp for some reason"
 
     img1 = list(Image.open('chungus_changed.jpg').convert("1").getdata())
     img2 = list(Image.open(path).convert("1").getdata())
-    if len(img1) != len(img2):
-        return False, ""
+   
+    os.system(f"rm {path}")
+    
+    bigger = len(img1)
+    if bigger > len(img2):
+        bigger = len(img2)
 
-    count = 0
-    for i in range(len(img1)):
-        if img1[i] == img2[i]:
-            count += 1
+    try:
+        count = 0
+        for i in range(bigger):
+            if img1[i] == img2[i]:
+                count += 1
+    except:
+        return False, "Image size not the same"
 
     message = "Percentage of pixels correct: " + str(count / len(img1))
     if count / len(img1) > 0.92:
@@ -106,7 +117,8 @@ def check1(av):
     elif count / len(img1) > 0.6:
         return False, message
     else:
-        return False, "nope"
+        return False, f"Images are not the same ({100 * count / len(img1)}%)"
+
 
 ##################################### MAIN #####################################
 if __name__ == '__main__': # Loads cog extentions and starts up the bot
